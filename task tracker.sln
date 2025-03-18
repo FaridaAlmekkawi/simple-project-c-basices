@@ -1,22 +1,88 @@
-﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.12.35521.163 d17.12
-MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "task tracker", "task tracker.csproj", "{9555FBD1-F36A-49A2-A5FE-35246698C58A}"
-EndProject
-Global
-	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
-		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{9555FBD1-F36A-49A2-A5FE-35246698C58A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9555FBD1-F36A-49A2-A5FE-35246698C58A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9555FBD1-F36A-49A2-A5FE-35246698C58A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9555FBD1-F36A-49A2-A5FE-35246698C58A}.Release|Any CPU.Build.0 = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-EndGlobal
+using System.Threading.Tasks;
+using System.Transactions;
+
+namespace task_tracker
+{
+    internal class Program
+    {
+        static string[] tasks = new string[100];
+        static int TasksIndex = 0;
+        static void Main(string[] args)
+        {
+            Console.WriteLine("welcome to your task tracker ");
+            while (true)
+            {
+                Console.WriteLine("please choose your function from 1 to 5 ");
+                Console.WriteLine(" 1- add task ");
+                Console.WriteLine(" 2- view task ");
+                Console.WriteLine(" 3- Mark complet task ");
+                Console.WriteLine(" 4- delete task ");
+                Console.WriteLine(" 5- Exit ");
+                string TaskChoose = Console.ReadLine();
+                switch (TaskChoose)
+                {
+                    case "1":
+                        AddTask();
+                        break;
+                    case "2":
+                        ViewTask();
+
+                        break;
+
+                    case "3":
+                        CompleteTask(); 
+                        break;
+
+                    case "4":
+                        RemoveTask(); 
+                        break;
+                    case "5":
+                        Environment.Exit(0); 
+                        break;
+                    default:
+                        Console.WriteLine("please enter number from 1 to 5 ");
+                        break;
+
+
+                }
+            }
+
+        }
+        static void AddTask()
+        {
+
+            Console.WriteLine("enter your task title : ");
+            string TaskTitle = Console.ReadLine();
+            tasks[TasksIndex] = TaskTitle;
+            TasksIndex++;
+
+
+        }
+        static void ViewTask()
+        {
+            Console.WriteLine("Tasks list is : ");
+            for (int i = 0; i < TasksIndex; i++)
+            {
+                Console.WriteLine($"{i+1} task title = {tasks[i]}");
+
+            }
+        }
+        static void CompleteTask()
+        {
+            Console.WriteLine("enter your completed task number ");
+            int TaskId  =int .Parse (Console.ReadLine());
+            tasks[TaskId-1] = tasks[TaskId] + " --- is completed ";
+
+        }
+        static void RemoveTask()
+        {
+            Console.WriteLine("enter number of tack deleted ");
+            int TaskId = int.Parse(Console.ReadLine());
+            tasks[TaskId] = "";
+            
+            Console.WriteLine("Task is delated");
+            
+        }
+
+    }
+}
